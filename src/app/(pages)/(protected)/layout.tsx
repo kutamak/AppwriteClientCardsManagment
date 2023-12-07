@@ -1,4 +1,7 @@
 "use client"
+import Header from "@/components/Header"
+import { ClubsContextProvider } from "@/context/cardTypes/CardTypeProvider"
+import GivenServicesProvider from "@/context/givenServices/GivenServicesProvider"
 import useAuth from "@/context/useAuth"
 import { useRouter } from "next/navigation"
 
@@ -17,8 +20,14 @@ const ProtectedLayout = ({
         router.replace("/login");
         return <></>;
     }
-    return children
-
+    return (
+      <ClubsContextProvider>
+        <GivenServicesProvider>
+          {children}
+        </GivenServicesProvider>
+      </ClubsContextProvider>
+    )
+    
 }
 
 export default ProtectedLayout;

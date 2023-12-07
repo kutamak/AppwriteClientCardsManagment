@@ -13,6 +13,10 @@ const ProfilePage = () => {
                 </Link>
                 <span className="text-3xl font-bold">My Account</span>
             </h1>
+            <div className="w-full max-w-xl items-center">
+                <Link href={"./givenServices"} className="bg-blend-color-burn bg-orange-500 p-3 mr-3 rounded-md">Given Services</Link>
+                <Link href={"./cardTypes"} className="bg-blend-color-burn bg-orange-500 p-3 rounded-md">Card Types</Link>
+            </div>
             <ProfileCard />
         </div>
     );

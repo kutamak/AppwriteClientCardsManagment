@@ -29,7 +29,7 @@ const ProfileCard= () => {
                         <div className="relative">
                             <p className="font-bold text-xl w-full mb-1">{user.name}</p>
                             <div className="text-[12px] p-0.5 inline-block rounded-md bg-gradient-to-tr from-primary to-secondary">
-                                <button className="px-2 rounded-md font-bold bg-white">FREE</button>
+                                <button className="px-2 rounded-md font-bold bg-white text-red-500">FREE</button>
                             </div>
                         </div>
                     </div>
@@ -44,11 +44,7 @@ const ProfileCard= () => {
                         </div>
                         <div className="relative w-full">
                             <p className="text-sm text-gray-700">Phone Number</p>
-                            <p className="font-semibold">999-888-7777</p>
-                        </div>
-                        <div className="relative w-full">
-                            <p className="text-sm text-gray-700">Password</p>
-                            <p className="font-semibold">********</p>
+                            <p className="font-semibold">[TODO]</p>
                         </div>
                     </div>
                     <div className="w-full flex justify-center">

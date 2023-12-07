@@ -10,12 +10,12 @@ const menuItems = [
         href: "/",
     },
     {
-        name: "About",
-        href: "#",
+        name: "Card Types",
+        href: "/cardTypes",
     },
     {
-        name: "Contact",
-        href: "#",
+        name: "Given Services",
+        href: "/givenServices",
     },
 ];
 
@@ -29,9 +29,9 @@ export default function Header() {
                         <Logo />
                     </Link>
                 </div>
-                <div className="hidden grow items-start lg:flex">
+                <div className="grow items-start md:flex">
                     <ul className="ml-12 inline-flex space-x-8">
-                        {menuItems.map((item) => (
+                        {authStatus && menuItems.map((item) => (
                             <li key={item.name}>
                                 <Link
                                     href={item.href}
@@ -43,7 +43,7 @@ export default function Header() {
                         ))}
                     </ul>
                 </div>
-                <div className="hidden space-x-2 lg:block">
+                <div className="space-x-2 md:block">
                     <Link
                         href={authStatus ? "/profile" : "/signup"}
                         className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
