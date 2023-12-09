@@ -5,7 +5,7 @@ import { createContext } from "react";
 
 export const GivenServicesContext = createContext<{
     listGivenServices: TypeGivenServiceFull[],
-    setListGivenServices: (clubs: TypeGivenServiceFull[]) => void,
+    setListGivenServices: (cards: TypeGivenServiceFull[]) => void,
     addEditGivenService: TypeGivenService | null, 
     setAddEditGivenService: (club: TypeGivenService | null) => void,
 }>({

@@ -5,7 +5,7 @@ import { createContext } from "react";
 
 export const ClientsContext = createContext<{
     listClients: TypeClientFull[],
-    setListClients: (clubs: TypeClientFull[]) => void,
+    setListClients: (cards: TypeClientFull[]) => void,
     addEditClient: TypeClient | null, 
     setAddEditClient: (club: TypeClient | null) => void,
 }>({

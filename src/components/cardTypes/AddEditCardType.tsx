@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useContext, useEffect, useState } from "react"
 import MyModal from "../globals/MyModal"
-import clubsService from "@/appwrite/cardsTypeService";
+import cardsService from "@/appwrite/cardsTypeService";
 import { TypeClub, TypeClubFull } from "@/globals/globalTypes";
 import CardsContext from "@/context/cardTypes/CardTypeContext";
 
@@ -16,7 +16,7 @@ export const AddEditCardType: React.FC = () => {
 
 	// const [isOpen, setIsOpen ] = useState(true);
 
-	const clubService = clubsService;
+	const cardservice = cardsService;
 
 	const updateField = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setCurrentClubInfo({
@@ -31,7 +31,7 @@ export const AddEditCardType: React.FC = () => {
 
 	const confirmSaving = () => {
 		if (currentClubInfo?.$id) {
-			clubService.update(currentClubInfo?.$id, currentClubInfo).then(res => {
+			cardservice.update(currentClubInfo?.$id, currentClubInfo).then(res => {
 				if (res.$id && listCards) {
 					// all is successfull
 					const newListCards = [...listCards] ;
@@ -45,7 +45,7 @@ export const AddEditCardType: React.FC = () => {
 			})
 		} else {
 			// it's creating new
-			clubService.create(currentClubInfo).then(res => {
+			cardservice.create(currentClubInfo).then(res => {
 				if (res.$id) {
 					// all is successfull
 					setListCards([

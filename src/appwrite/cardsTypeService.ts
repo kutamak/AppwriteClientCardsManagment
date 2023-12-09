@@ -78,6 +78,6 @@ class CardsService extends genericSerivce implements ApiService<TypeClubFull> {
 	}
 }
 
-const clubsService = new CardsService()
+const cardsService = new CardsService()
 
-export default clubsService;
+export default cardsService;
