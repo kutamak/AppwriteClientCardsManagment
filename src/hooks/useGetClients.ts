@@ -1,20 +1,21 @@
 import cardsTypeService from "@/appwrite/cardsTypeService";
-import CardTypesContext from "@/context/cardTypes/CardTypeContext";
-import { TypeClubFull } from "@/globals/globalTypes";
+import myClientService from "@/appwrite/clientsService";
+import ClientsContext from "@/context/clients/ClientsContext";
+import { TypeClientFull } from "@/globals/globalTypes";
 import { useContext, useEffect, useState } from "react";
 
-const useGetCardTypes = () => {
+const useGetClients = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const {listClubs,setListClubs} = useContext(CardTypesContext);
+  const {listClients, setListClients} = useContext(ClientsContext);
 
   
 	const refreshList = async () => {
     setIsLoading(true);
-		const myLists = await cardsTypeService.getList<TypeClubFull>();
+		const myLists = await myClientService.getList();
 		try {
 			if (myLists) {
-				setListClubs(myLists?.documents);
+        setListClients(myLists?.documents);
 			} else {
 				throw new Error("No myList..")
 			}
@@ -29,9 +30,9 @@ const useGetCardTypes = () => {
 	}, [])
 
   return {
-    listClubs, refreshList, isLoading
+    listClients, refreshList, isLoading
   }
 
 }
 
-export default useGetCardTypes;
+export default useGetClients;

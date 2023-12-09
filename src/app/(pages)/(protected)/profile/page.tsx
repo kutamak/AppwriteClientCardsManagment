@@ -16,6 +16,7 @@ const ProfilePage = () => {
             <div className="w-full max-w-xl items-center">
                 <Link href={"./givenServices"} className="bg-blend-color-burn bg-orange-500 p-3 mr-3 rounded-md">Given Services</Link>
                 <Link href={"./cardTypes"} className="bg-blend-color-burn bg-orange-500 p-3 rounded-md">Card Types</Link>
+                <Link href={"./clients"} className="bg-blend-color-burn bg-orange-500 p-3 rounded-md">Clients</Link>
             </div>
             <ProfileCard />
         </div>

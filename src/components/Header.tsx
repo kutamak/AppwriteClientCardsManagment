@@ -10,6 +10,10 @@ const menuItems = [
         href: "/",
     },
     {
+        name: "clients",
+        href: "/clients",
+    },
+    {
         name: "Card Types",
         href: "/cardTypes",
     },

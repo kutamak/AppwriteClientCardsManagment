@@ -13,7 +13,7 @@ const useGetGivenService = () => {
 		const myLists = await givenServicesService.getList();
 		try {
 			if (myLists) {
-				setListGivenServices(myLists?.documents);
+				setListGivenServices(myLists.documents);
 			} else {
 				throw new Error("No myList..")
 			}

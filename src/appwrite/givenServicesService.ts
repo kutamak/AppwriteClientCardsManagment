@@ -10,7 +10,7 @@ import { genericSerivce } from "./genericService";
 
 
 class GivenServicesService extends genericSerivce implements ApiService<TypeGivenServiceFull> {
-	readonly collectionId = "givenServices";
+	readonly collectionId = process.env.NEXT_PUBLIC_APPWRITE_TABLE_GIVEN_SERVICES || "";
 	currentUser: Models.User<Models.Preferences> | null = null;
 
 	async validateUser():Promise<boolean> {
@@ -18,9 +18,9 @@ class GivenServicesService extends genericSerivce implements ApiService<TypeGive
 		return !!this.currentUser;
 	}
 
-  async getList():Promise<ApiResponse> {
+  async getList():Promise<ApiResponse<TypeGivenServiceFull>> {
     if(await this.validateUser()){
-      const ans:ApiResponse = await databases.listDocuments(
+      const ans:ApiResponse<TypeGivenServiceFull> = await databases.listDocuments(
         conf.appwriteDatabaseId,
 			  this.collectionId, 
       );

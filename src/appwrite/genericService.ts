@@ -13,4 +13,15 @@ export class genericSerivce {
 		this.currentUser = await appwriteService.getCurrentUser()
 		return !!this.currentUser;
 	}
+
+	getAllPermissionsForUserId(userId:string):string[]{
+		if(!userId){
+			return [];
+		}
+		return [
+			Permission.read(Role.user(userId)),
+			Permission.update(Role.user(userId)),
+			Permission.delete(Role.user(userId)),
+		]
+	}
 }

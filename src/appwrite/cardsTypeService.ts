@@ -11,7 +11,7 @@ import { genericSerivce } from "./genericService";
 // }
 
 class ClubsService extends genericSerivce implements ApiService<TypeClubFull> {
-	readonly collectionId = "6554ade0f37d46b1e2d9";
+	readonly collectionId = process.env.NEXT_PUBLIC_APPWRITE_TABLE_CARD_TYPES || "";
 	currentUser: Models.User<Models.Preferences> | null = null;
 
 	async validateUser() {
@@ -19,9 +19,9 @@ class ClubsService extends genericSerivce implements ApiService<TypeClubFull> {
 		return !!this.currentUser;
 	}
 
-	async getList():Promise<ApiResponse> {
+	async getList<T>():Promise<ApiResponse<TypeClubFull>> {
 		if (await this.validateUser()) {
-			const ans:ApiResponse = await databases.listDocuments(
+			const ans:ApiResponse<T> = await databases.listDocuments(
 				conf.appwriteDatabaseId,
 				this.collectionId,
 			);

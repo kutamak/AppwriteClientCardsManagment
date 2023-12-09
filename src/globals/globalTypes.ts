@@ -2,14 +2,14 @@ import { Models } from "appwrite";
 
 
 
-interface ApiResponse<T> extends Models.DocumentList <TypeGivenServiceFull | TypeClubFull>{
+interface ApiResponse<T> extends Models.DocumentList <(TypeGivenServiceFull | TypeClubFull | TypeClientFull)>{
 
 }
 interface ApiService <T>{
     readonly collectionId: string,
     currentUser: Models.User<Models.Preferences> | null,
     validateUser():Promise<boolean>,
-    getList(): Promise<ApiResponse<TypeGivenServiceFull | TypeClubFull>>
+    getList(): Promise<ApiResponse<(TypeGivenServiceFull | TypeClubFull)>>
     create(givenServices:T):Promise<T>
     update(recordId: string, givenService: T): Promise<T>
     delete(recordId:string): void;
@@ -31,7 +31,22 @@ interface TypeClub {
     usageCountLimit: number | undefined;
 }
 
-interface TypeClubFull extends TypeClub, Models.Document {}
+interface TypeClubFull extends TypeClub, Models.Document {
+    auth_id: string | null;
+    isDeleted: Boolean | null;
+}
+
+interface TypeClient {
+    id: string;
+    full_name: string;
+    phone_number: string;
+    email: string;
+    more_info: string;
+    is_deleted?: Boolean;
+
+}
+
+interface TypeClientFull extends TypeClient, Models.Document {}
 
 interface TypeGivenService {
     title: string | undefined;
@@ -44,17 +59,11 @@ interface TypeGivenServiceFull extends TypeGivenService, Models.Document{}
 
 
 
-interface TypeClient {
-    id: String;
-    name: String;
-    email: String;
-
-}
-
 export type { 
     TypeClub,
     TypeClubFull, 
     TypeClient, 
+    TypeClientFull, 
     CreateUserAccount, 
     LoginUserAccount, 
     TypeGivenService, 
