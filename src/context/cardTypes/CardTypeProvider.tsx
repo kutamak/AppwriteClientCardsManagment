@@ -2,15 +2,15 @@ import { useState } from "react";
 import { TypeClub, TypeClubFull } from "@/globals/globalTypes";
 import { CardTypesContextPreProvider } from "./CardTypeContext";
 
-export const ClubsContextProvider = ({
+export const CardsContextProvider = ({
   children,
 }: {
   children: React.ReactNode
 }) => {
-  const [listClubs, setListClubs] = useState<TypeClubFull[]>([]);
+  const [listCards, setListCards] = useState<TypeClubFull[]>([]);
   const [addEditClub, setAddEditClub] = useState<TypeClub | null>(null);
   return (
-    <CardTypesContextPreProvider value={{ listClubs , setListClubs, addEditClub, setAddEditClub }}>
+    <CardTypesContextPreProvider value={{ listCards , setListCards, addEditClub, setAddEditClub }}>
       {children}
     </CardTypesContextPreProvider>
   );

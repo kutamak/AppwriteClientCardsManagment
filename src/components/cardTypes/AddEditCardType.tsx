@@ -4,7 +4,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react"
 import MyModal from "../globals/MyModal"
 import clubsService from "@/appwrite/cardsTypeService";
 import { TypeClub, TypeClubFull } from "@/globals/globalTypes";
-import ClubsContext from "@/context/cardTypes/CardTypeContext";
+import CardsContext from "@/context/cardTypes/CardTypeContext";
 
 interface EditableClub extends TypeClub {
 	$id?: string,
@@ -12,7 +12,7 @@ interface EditableClub extends TypeClub {
 
 export const AddEditCardType: React.FC = () => {
 	const [currentClubInfo, setCurrentClubInfo] = useState<EditableClub>({ title: "", description: "", joinPrice: 0, usageCountLimit: 1 })
-	const { listClubs, setListClubs, addEditClub, setAddEditClub } = useContext(ClubsContext);
+	const { listCards, setListCards, addEditClub, setAddEditClub } = useContext(CardsContext);
 
 	// const [isOpen, setIsOpen ] = useState(true);
 
@@ -32,12 +32,12 @@ export const AddEditCardType: React.FC = () => {
 	const confirmSaving = () => {
 		if (currentClubInfo?.$id) {
 			clubService.update(currentClubInfo?.$id, currentClubInfo).then(res => {
-				if (res.$id && listClubs) {
+				if (res.$id && listCards) {
 					// all is successfull
-					const newListClubs = [...listClubs] ;
-					const updatedIdx = listClubs.findIndex(club => res.$id === club.$id)
-					newListClubs[updatedIdx] = res;
-					setListClubs(newListClubs);
+					const newListCards = [...listCards] ;
+					const updatedIdx = listCards.findIndex(club => res.$id === club.$id)
+					newListCards[updatedIdx] = res;
+					setListCards(newListCards);
 					closeAddEdit();
 				} else {
 					throw new Error("Something went wrong")
@@ -48,8 +48,8 @@ export const AddEditCardType: React.FC = () => {
 			clubService.create(currentClubInfo).then(res => {
 				if (res.$id) {
 					// all is successfull
-					setListClubs([
-						...listClubs,
+					setListCards([
+						...listCards,
 						res
 					])
 					closeAddEdit();
@@ -87,7 +87,7 @@ export const AddEditCardType: React.FC = () => {
 								name="title"
 								id="title"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-								placeholder="Clubs title" />
+								placeholder="Cards title" />
 						</div>
 						<div className="col-span-2 sm:col-span-1">
 							<label

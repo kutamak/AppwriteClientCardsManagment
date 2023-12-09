@@ -16,7 +16,7 @@ interface EditableGivenService extends TypeGivenService {
 export const AddEditGivenService: React.FC = () => {
 	const [currentGivenSerivce, setCurrentGivenSerivce] = useState<EditableGivenService>({ title: "", description: "", cardTypes: [] })
 	const { listGivenServices, setListGivenServices, addEditGivenService, setAddEditGivenService, } = useContext(GivenServicesContext);
-	const { listClubs, isLoading } = useGetCardTypes();
+	const { listCards, isLoading } = useGetCardTypes();
 
 	const givenService = givenServicesService;
 
@@ -37,7 +37,7 @@ export const AddEditGivenService: React.FC = () => {
 			updatedCardTypes.splice(isChecked,1);
 		}else{
 			// Adding.
-			const newClubType = listClubs.find(elm => elm.$id === currentCardTypeId)
+			const newClubType = listCards.find(elm => elm.$id === currentCardTypeId)
 			if(newClubType){
 				updatedCardTypes.push(newClubType)
 			}
@@ -107,7 +107,7 @@ export const AddEditGivenService: React.FC = () => {
 								name="title"
 								id="title"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-								placeholder="Clubs title" />
+								placeholder="Cards title" />
 						</div>
 						<div className="col-span-2 sm:col-span-1">
 							<label
@@ -136,7 +136,7 @@ export const AddEditGivenService: React.FC = () => {
 										</label>
 										<ul className="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
 											{
-												currentGivenSerivce.cardTypes && listClubs.map(singleCard => (
+												currentGivenSerivce.cardTypes && listCards.map(singleCard => (
 													<li key={singleCard.$id} className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
 														<div className="flex items-center ps-3">
 															<input checked={0 <= currentGivenSerivce.cardTypes.findIndex(tmpCard => typeof tmpCard === "string" ? tmpCard === singleCard.$id : tmpCard.$id == singleCard.$id)} onChange={updateSelectedArr} title={singleCard.description} id={singleCard.$id} type="checkbox" value={singleCard.$id} />

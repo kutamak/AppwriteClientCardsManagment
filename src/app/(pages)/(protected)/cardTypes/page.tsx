@@ -1,4 +1,4 @@
-import ListOfClubs from "@/components/cardTypes/ListOfCardType";
+import ListOfCards from "@/components/cardTypes/ListOfCardType";
 import CreateNewClubButton from "@/components/cardTypes/CreateNewCardTypeButton";
 import Link from "next/link";
 import React from "react";
@@ -19,7 +19,7 @@ const CardTypesPage = () => {
             <div className="flex flex-col flex- gap-y-6 flex-wrap">
                 <CreateNewClubButton />
                 <AddEditCardType />
-                <ListOfClubs />
+                <ListOfCards />
             </div>
         </div>
     );

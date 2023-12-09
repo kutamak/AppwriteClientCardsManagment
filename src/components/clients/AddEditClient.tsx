@@ -18,7 +18,7 @@ interface EditableClient extends TypeClient {
 export const AddEditClient: React.FC = () => {
 	const [currentClient, setCurrentClient] = useState<EditableClient>({ full_name: "", email: "", id: "", phone_number: "", more_info: "" })
 	const { listClients, setListClients, addEditClient, setAddEditClient, } = useContext(ClientsContext);
-	const { listClubs, isLoading } = useGetCardTypes();
+	const { listCards, isLoading } = useGetCardTypes();
 
 	const clientService = myClientService;
 
@@ -39,7 +39,7 @@ export const AddEditClient: React.FC = () => {
 	// 		updatedCardTypes.splice(isChecked,1);
 	// 	}else{
 	// 		// Adding.
-	// 		const newClubType = listClubs.find(elm => elm.$id === currentCardTypeId)
+	// 		const newClubType = listCards.find(elm => elm.$id === currentCardTypeId)
 	// 		if(newClubType){
 	// 			updatedCardTypes.push(newClubType)
 	// 		}
@@ -170,7 +170,7 @@ export const AddEditClient: React.FC = () => {
 										>
 											<option>Choose a card</option>
 											{
-												listClubs.map(singleCard => (
+												listCards.map(singleCard => (
 													<option
 														// checked={0 <= currentGivenSerivce.cardTypes.findIndex(tmpCard => typeof tmpCard === "string" ? tmpCard === singleCard.$id : tmpCard.$id == singleCard.$id)} 
 														key={singleCard.$id}

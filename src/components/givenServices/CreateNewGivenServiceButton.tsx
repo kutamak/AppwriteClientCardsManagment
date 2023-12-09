@@ -1,7 +1,7 @@
 "use client"
 
 import { useContext } from "react"
-import ClubsContext from "@/context/cardTypes/CardTypeContext";
+import CardsContext from "@/context/cardTypes/CardTypeContext";
 import GivenServicesContext from "@/context/givenServices/GivenServicesContext";
 
 export const CreateNewGivenServiceButton = () => {

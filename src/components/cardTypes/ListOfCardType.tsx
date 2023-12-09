@@ -6,24 +6,24 @@ import { useContext } from "react"
 
 
 const ListOfCardType = (): React.ReactElement => {
-	const {setListClubs, setAddEditClub} = useContext(CardTypeContext);
-	const {isLoading,listClubs} = useGetCardTypes();
+	const {setListCards, setAddEditClub} = useContext(CardTypeContext);
+	const {isLoading,listCards} = useGetCardTypes();
 
 	const doDelete = async (clubId: string) => {
 		const deletedClub = await cardsTypeService.delete(clubId)
 		// TODO: Check if user has permission to delete this!;
 		if(deletedClub){
 			// doFetch();
-			const newListClubs = (listClubs) ? [...listClubs] : []
-			const delIdx:number = listClubs?.findIndex(club => clubId === club.$id)
-			newListClubs.splice(delIdx,1)
-			setListClubs(newListClubs);
+			const newListCards = (listCards) ? [...listCards] : []
+			const delIdx:number = listCards?.findIndex(club => clubId === club.$id)
+			newListCards.splice(delIdx,1)
+			setListCards(newListCards);
 		}
 	}
 
 	const doEdit = (idx:number) => {
-		if(listClubs){
-			setAddEditClub(listClubs[idx])
+		if(listCards){
+			setAddEditClub(listCards[idx])
 		}else{
 			// impossible getting here
 		}
@@ -61,7 +61,7 @@ const ListOfCardType = (): React.ReactElement => {
 				</thead>
 				<tbody>
 					{
-						listClubs?.map((club, i) =>
+						listCards?.map((club, i) =>
 						(
 							<tr key={i} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
 								<th scope="row" className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

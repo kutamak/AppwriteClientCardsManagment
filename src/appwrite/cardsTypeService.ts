@@ -10,7 +10,7 @@ import { genericSerivce } from "./genericService";
 
 // }
 
-class ClubsService extends genericSerivce implements ApiService<TypeClubFull> {
+class CardsService extends genericSerivce implements ApiService<TypeClubFull> {
 	readonly collectionId = process.env.NEXT_PUBLIC_APPWRITE_TABLE_CARD_TYPES || "";
 	currentUser: Models.User<Models.Preferences> | null = null;
 
@@ -78,6 +78,6 @@ class ClubsService extends genericSerivce implements ApiService<TypeClubFull> {
 	}
 }
 
-const clubsService = new ClubsService()
+const clubsService = new CardsService()
 
 export default clubsService;

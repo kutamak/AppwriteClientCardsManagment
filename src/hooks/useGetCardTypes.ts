@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 const useGetCardTypes = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const {listClubs,setListClubs} = useContext(CardTypesContext);
+  const {listCards,setListCards} = useContext(CardTypesContext);
 
   
 	const refreshList = async () => {
@@ -14,7 +14,7 @@ const useGetCardTypes = () => {
 		const myLists = await cardsTypeService.getList<TypeClubFull>();
 		try {
 			if (myLists) {
-				setListClubs(myLists?.documents);
+				setListCards(myLists?.documents);
 			} else {
 				throw new Error("No myList..")
 			}
@@ -29,7 +29,7 @@ const useGetCardTypes = () => {
 	}, [])
 
   return {
-    listClubs, refreshList, isLoading
+    listCards, refreshList, isLoading
   }
 
 }

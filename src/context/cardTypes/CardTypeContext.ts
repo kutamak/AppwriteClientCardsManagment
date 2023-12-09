@@ -4,13 +4,13 @@ import { createContext } from "react";
 
 
 export const CardTypesContext = createContext<{
-    listClubs: TypeClubFull[],
-    setListClubs: (clubs: TypeClubFull[]) => void,
+    listCards: TypeClubFull[],
+    setListCards: (clubs: TypeClubFull[]) => void,
     addEditClub: TypeClub | null, 
     setAddEditClub: (club: TypeClub | null) => void,
 }>({
-    listClubs: [],
-    setListClubs: () => {},
+    listCards: [],
+    setListCards: () => {},
     addEditClub: null,
     setAddEditClub:  () => {},
 })
