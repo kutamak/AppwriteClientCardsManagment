@@ -25,7 +25,9 @@ const ProtectedLayout = ({
       <CardsContextProvider>
         <GivenServicesProvider>
           <ClientsProvider>
-            {children}
+            <CardsContextProvider>
+              {children}
+            </CardsContextProvider>
           </ClientsProvider>
         </GivenServicesProvider>
       </CardsContextProvider>

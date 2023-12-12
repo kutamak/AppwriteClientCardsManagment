@@ -10,18 +10,22 @@ import CardTypesContext from "@/context/cardTypes/CardTypeContext";
 import useGetCardTypes from "@/hooks/useGetCardTypes";
 import ClientsContext from "@/context/clients/ClientsContext";
 import myClientService from "@/appwrite/clientsService";
+import AddEditCard from "../cards/AddEditCard";
 
 interface EditableClient extends TypeClient {
 	$id?: string,
 }
 
 export const AddEditClient: React.FC = () => {
-	const [currentClient, setCurrentClient] = useState<EditableClient>({ full_name: "", email: "", id: "", phone_number: "", more_info: "" })
+	const [currentClient, setCurrentClient] = useState<EditableClient>({ full_name: "", email: "", phone_number: "", more_info: "", card_type:"" })
+	const [editCard, setEditCard] = useState<boolean>(false);
 	const { listClients, setListClients, addEditClient, setAddEditClient, } = useContext(ClientsContext);
-	const { listCards, isLoading } = useGetCardTypes();
 
 	const clientService = myClientService;
 
+	const toggleEditCard = (ev: ChangeEvent<HTMLInputElement>) => {
+		setEditCard(ev.currentTarget.checked)
+	}
 	const updateField = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		setCurrentClient({
 			...currentClient,
@@ -60,6 +64,9 @@ export const AddEditClient: React.FC = () => {
 					const updatedIdx = listClients.findIndex(currClientn => res.$id === currClientn.$id)
 					newlistClients[updatedIdx] = res;
 					setListClients(newlistClients);
+					if(editCard){
+						//TODO: update card
+					}
 					closeAddEdit();
 				} else {
 					throw new Error("Something went wrong")
@@ -74,6 +81,9 @@ export const AddEditClient: React.FC = () => {
 						...listClients,
 						res
 					])
+					if(editCard){
+						//TODO: update card
+					}
 					closeAddEdit();
 				} else {
 					console.log("Something went wrong", res)
@@ -158,34 +168,23 @@ export const AddEditClient: React.FC = () => {
 								placeholder="More Info" />
 						</div>
 
-						{
-							isLoading ? ("Loading Card Types...")
-								: (
-									<div className="col-span-2 sm:col-span-1">
-										<label htmlFor="userCard" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an card</label>
-										<select
-											id="userCard"
-											onChange={updateField}
-											className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-										>
-											<option>Choose a card</option>
-											{
-												listCards.map(singleCard => (
-													<option
-														// checked={0 <= currentGivenSerivce.cardTypes.findIndex(tmpCard => typeof tmpCard === "string" ? tmpCard === singleCard.$id : tmpCard.$id == singleCard.$id)} 
-														key={singleCard.$id}
-														value={singleCard.$id}
-													>
-														{singleCard.title}
-													</option>
-												))
-											}
-										</select>
+						
+						<label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
+								<input
+									id="is_actived"
+									onChange={toggleEditCard}
+									type="checkbox"
+									value=""
+									className="sr-only peer"
+									checked={editCard}
+								/>
+								<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+								<span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Edit Members Card</span>
+							</label>
 
-									</div>
-								)
-						}
-
+						{ editCard && (
+							<AddEditCard />
+						)}
 					</form>
 				</MyModal>
 			)}

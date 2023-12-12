@@ -3,6 +3,8 @@ import appwriteService, { account, databases } from "./config"
 import { ID, Models, Permission, Role } from "appwrite";
 import { ApiResponse, ApiService, TypeClientFull, TypeClient, CreateUserAccount } from "@/globals/globalTypes";
 import { genericSerivce } from "./genericService";
+import cardsService from "./cardsTypeService";
+import myCardService from "./cardsService";
 
 
 class ClientService extends genericSerivce implements ApiService<TypeClientFull> {
@@ -48,17 +50,29 @@ class ClientService extends genericSerivce implements ApiService<TypeClientFull>
 			// 	myPermissions.push(...this.getAllPermissionsForUserId(userAccountId));
 			// }
 			console.log("myPermissions, ", myPermissions)
-			const currentClub = await databases.createDocument<TypeClientFull>(conf.appwriteDatabaseId,
+			const currentClient = await databases.createDocument<TypeClientFull>(conf.appwriteDatabaseId,
 				this.collectionId,ID.unique(), {
 					email: client.email,
 					full_name: client.full_name,
 					phone_number: client.phone_number,
 					more_info: client.more_info,
 					is_deleted: false,
+					// card_type: client.card_type,
+					// todo: add card_id
 					// ...client,
 					// owner: this.currentUser?.$id // This is for me - to check permissions myself!
-				},myPermissions)
-			return currentClub;
+				},myPermissions);
+				
+				if(client.card_type){
+					myCardService.create({
+						user2cards: currentClient.$id,
+						card_type: client.card_type,
+						times_used: 0,
+						is_actived: true,
+					})
+				}
+
+			return currentClient;
 		}else{
 			throw new Error("User not connected")
 		}
@@ -76,8 +90,20 @@ class ClientService extends genericSerivce implements ApiService<TypeClientFull>
 					phone_number: client.phone_number,
 					more_info: client.more_info,
 					is_deleted: false,
-				}
+					// TODO: add card_id
+				}	
 			);
+
+			console.log("client", client)
+			if(client.card_type){
+				myCardService.create({
+					user2cards: clientId,
+					card_type: client.card_type,
+					times_used: 0,
+					is_actived: true,
+					expires_date: ""
+				})
+			}
 			return updatedClub;
 			// return ans
 		} else {
@@ -86,7 +112,7 @@ class ClientService extends genericSerivce implements ApiService<TypeClientFull>
 	}
 	async delete(clientId:string){
 		if (await this.validateUser()) {
-			const currentClub = await databases.updateDocument<TypeClientFull>(
+			const currentClient = await databases.updateDocument<TypeClientFull>(
 				conf.appwriteDatabaseId,
 				this.collectionId,
 				clientId,
@@ -94,7 +120,7 @@ class ClientService extends genericSerivce implements ApiService<TypeClientFull>
 					is_deleted: true,
 				}
 			);
-			return currentClub;
+			return currentClient;
 		}else{
 			throw new Error("User not connected")
 		}

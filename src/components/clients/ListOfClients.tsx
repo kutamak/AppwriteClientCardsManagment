@@ -32,6 +32,7 @@ const ListOfClients = (): React.ReactElement => {
 
 	}
 
+	console.log("listClients", listClients)
 	if (isLoading) {
 		return <div>Loading...</div>
 	}

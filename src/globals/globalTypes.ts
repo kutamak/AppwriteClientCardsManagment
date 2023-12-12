@@ -2,7 +2,7 @@ import { Models } from "appwrite";
 
 
 
-interface ApiResponse<T> extends Models.DocumentList <(TypeGivenServiceFull | TypeClubFull | TypeClientFull)>{
+interface ApiResponse<T> extends Models.DocumentList <(TypeGivenServiceFull | TypeClubFull | TypeClientFull | TypeCardFull)>{
 
 }
 interface ApiService <T>{
@@ -10,7 +10,7 @@ interface ApiService <T>{
     currentUser: Models.User<Models.Preferences> | null,
     validateUser():Promise<boolean>,
     getList(): Promise<ApiResponse<(TypeGivenServiceFull | TypeClubFull)>>
-    create(givenServices:T):Promise<T>
+    create(obj:T):Promise<T>
     update(recordId: string, givenService: T): Promise<T>
     delete(recordId:string): void;
 }    
@@ -37,16 +37,28 @@ interface TypeClubFull extends TypeClub, Models.Document {
 }
 
 interface TypeClient {
-    id: string;
+    // id: string;
     full_name: string;
     phone_number: string;
     email: string;
     more_info: string;
     is_deleted?: Boolean;
+    card_type?: string;
 
 }
 
 interface TypeClientFull extends TypeClient, Models.Document {}
+
+interface TypeCard {
+    times_used: number;
+    user2cards: string;
+    card_type?: string;
+    is_actived?: Boolean;
+    expires_date?: string | Date;
+
+}
+
+interface TypeCardFull extends TypeCard, Models.Document {}
 
 interface TypeGivenService {
     title: string | undefined;
@@ -60,6 +72,8 @@ interface TypeGivenServiceFull extends TypeGivenService, Models.Document{}
 
 
 export type { 
+    TypeCardFull,
+    TypeCard,
     TypeClub,
     TypeClubFull, 
     TypeClient, 

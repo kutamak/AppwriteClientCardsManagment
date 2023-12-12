@@ -4,7 +4,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react"
 import MyModal from "../globals/MyModal"
 import cardsService from "@/appwrite/cardsTypeService";
 import { TypeClub, TypeClubFull } from "@/globals/globalTypes";
-import CardsContext from "@/context/cardTypes/CardTypeContext";
+import CardTypesContext from "@/context/cardTypes/CardTypeContext";
 
 interface EditableClub extends TypeClub {
 	$id?: string,
@@ -12,7 +12,7 @@ interface EditableClub extends TypeClub {
 
 export const AddEditCardType: React.FC = () => {
 	const [currentClubInfo, setCurrentClubInfo] = useState<EditableClub>({ title: "", description: "", joinPrice: 0, usageCountLimit: 1 })
-	const { listCards, setListCards, addEditClub, setAddEditClub } = useContext(CardsContext);
+	const { listCards, setListCards, addEditClub, setAddEditClub } = useContext(CardTypesContext);
 
 	// const [isOpen, setIsOpen ] = useState(true);
 
