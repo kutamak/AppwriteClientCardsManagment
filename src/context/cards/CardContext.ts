@@ -6,13 +6,19 @@ import { createContext } from "react";
 export const CardsContext = createContext<{
     listCards: TypeCardFull[],
     setListCards: (cards: TypeCardFull[]) => void,
-    addEditClub: TypeCard | null, 
-    setAddEditClub: (club: TypeCard | null) => void,
+    addEditCard: TypeCard, 
+    setAddEditCard: (club: TypeCard | null) => void,
 }>({
     listCards: [],
     setListCards: () => {},
-    addEditClub: null,
-    setAddEditClub:  () => {},
+    addEditCard: {
+        times_used: 0,
+        is_active: true,
+        expires_date: "",
+        card_type: "",
+        user2cards: "",
+    },
+    setAddEditCard:  () => {},
 })
 
 export const CardsContextPreProvider = CardsContext.Provider;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TypeClub, TypeClubFull } from "@/globals/globalTypes";
 import { CardTypesContextPreProvider } from "./CardTypeContext";
 
-export const CardsContextProvider = ({
+export const CardTypesContextProvider = ({
   children,
 }: {
   children: React.ReactNode

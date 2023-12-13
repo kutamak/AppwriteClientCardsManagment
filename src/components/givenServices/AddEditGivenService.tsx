@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useContext, useEffect, useState } from "react"
 import MyModal from "../globals/MyModal"
-import cardsService from "@/appwrite/cardsTypeService";
+import cardTypesService from "@/appwrite/cardsTypeService";
 import { TypeClubFull, TypeGivenService, TypeGivenServiceFull } from "@/globals/globalTypes";
 import GivenServicesContext from "@/context/givenServices/GivenServicesContext";
 import givenServicesService from "@/appwrite/givenServicesService";

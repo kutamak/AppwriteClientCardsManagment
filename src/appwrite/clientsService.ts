@@ -68,7 +68,7 @@ class ClientService extends genericSerivce implements ApiService<TypeClientFull>
 						user2cards: currentClient.$id,
 						card_type: client.card_type,
 						times_used: 0,
-						is_actived: true,
+						is_active: true,
 					})
 				}
 
@@ -100,7 +100,7 @@ class ClientService extends genericSerivce implements ApiService<TypeClientFull>
 					user2cards: clientId,
 					card_type: client.card_type,
 					times_used: 0,
-					is_actived: true,
+					is_active: true,
 					expires_date: ""
 				})
 			}

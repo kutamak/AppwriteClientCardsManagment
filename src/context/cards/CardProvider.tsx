@@ -8,9 +8,9 @@ export const CardsContextProvider = ({
   children: React.ReactNode
 }) => {
   const [listCards, setListCards] = useState<TypeCardFull[]>([]);
-  const [addEditClub, setAddEditClub] = useState<TypeCard | null>(null);
+  const [addEditCard, setAddEditCard] = useState<TypeCard | null>(null);
   return (
-    <CardsContextPreProvider value={{ listCards , setListCards, addEditClub, setAddEditClub }}>
+    <CardsContextPreProvider value={{ listCards , setListCards, addEditCard, setAddEditCard }}>
       {children}
     </CardsContextPreProvider>
   );

@@ -1,8 +1,11 @@
-import ListOfCardType from "@/components/cardTypes/ListOfCardType";
+// import ListOfCards from "@/components/cardTypes/ListOfCardType";
 import CreateNewClubButton from "@/components/cardTypes/CreateNewCardTypeButton";
 import Link from "next/link";
 import React from "react";
 import { AddEditCardType } from "@/components/cardTypes/AddEditCardType";
+import CreateNewCardButton from "@/components/cards/CreateNewCardButton";
+import ListOfCards from "@/components/cards/ListOfCards";
+import { AddEditCardModal } from "@/components/cards/AddEditCardModal";
 
 const CardTypesPage = () => {
 
@@ -14,12 +17,12 @@ const CardTypesPage = () => {
                         &lt;
                     </span>
                 </Link>
-                <span className="text-3xl font-bold">Card Types</span>
+                <span className="text-3xl font-bold">Cards</span>
             </h1>
             <div className="flex flex-col flex- gap-y-6 flex-wrap">
-                <CreateNewClubButton />
-                <AddEditCardType />
-                <ListOfCardType />
+                <CreateNewCardButton />
+                <AddEditCardModal />
+                <ListOfCards />
             </div>
         </div>
     );

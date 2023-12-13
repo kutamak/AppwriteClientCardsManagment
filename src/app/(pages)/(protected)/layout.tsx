@@ -1,6 +1,7 @@
 "use client"
 import Header from "@/components/Header"
-import { CardsContextProvider } from "@/context/cardTypes/CardTypeProvider"
+import { CardTypesContextProvider } from "@/context/cardTypes/CardTypeProvider"
+import { CardsContextProvider } from "@/context/cards/CardProvider"
 import ClientsProvider from "@/context/clients/ClientsProvider"
 import GivenServicesProvider from "@/context/givenServices/GivenServicesProvider"
 import useAuth from "@/context/useAuth"
@@ -22,7 +23,7 @@ const ProtectedLayout = ({
         return <></>;
     }
     return (
-      <CardsContextProvider>
+      <CardTypesContextProvider>
         <GivenServicesProvider>
           <ClientsProvider>
             <CardsContextProvider>
@@ -30,7 +31,7 @@ const ProtectedLayout = ({
             </CardsContextProvider>
           </ClientsProvider>
         </GivenServicesProvider>
-      </CardsContextProvider>
+      </CardTypesContextProvider>
     )
     
 }

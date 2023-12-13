@@ -1,4 +1,5 @@
 import { Models } from "appwrite";
+import { Type } from "typescript";
 
 
 
@@ -9,7 +10,7 @@ interface ApiService <T>{
     readonly collectionId: string,
     currentUser: Models.User<Models.Preferences> | null,
     validateUser():Promise<boolean>,
-    getList(): Promise<ApiResponse<(TypeGivenServiceFull | TypeClubFull)>>
+    getList(params?: extraQueryParams): Promise<ApiResponse<(TypeGivenServiceFull | TypeClubFull)>>
     create(obj:T):Promise<T>
     update(recordId: string, givenService: T): Promise<T>
     delete(recordId:string): void;
@@ -51,9 +52,9 @@ interface TypeClientFull extends TypeClient, Models.Document {}
 
 interface TypeCard {
     times_used: number;
-    user2cards: string;
-    card_type?: string;
-    is_actived?: Boolean;
+    user2cards: string | TypeClientFull;
+    card_type?: string | TypeClubFull;
+    is_active?: Boolean;
     expires_date?: string | Date;
 
 }
@@ -70,8 +71,13 @@ interface TypeGivenService {
 interface TypeGivenServiceFull extends TypeGivenService, Models.Document{}
 
 
+type extraQueryParams = {
+	[key: string]: any,
+    getOnlyActive?: boolean,
+}
 
 export type { 
+    extraQueryParams,
     TypeCardFull,
     TypeCard,
     TypeClub,

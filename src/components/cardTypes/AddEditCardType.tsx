@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useContext, useEffect, useState } from "react"
 import MyModal from "../globals/MyModal"
-import cardsService from "@/appwrite/cardsTypeService";
+import cardTypesService from "@/appwrite/cardsTypeService";
 import { TypeClub, TypeClubFull } from "@/globals/globalTypes";
 import CardTypesContext from "@/context/cardTypes/CardTypeContext";
 
@@ -16,7 +16,7 @@ export const AddEditCardType: React.FC = () => {
 
 	// const [isOpen, setIsOpen ] = useState(true);
 
-	const cardservice = cardsService;
+	const cardservice = cardTypesService;
 
 	const updateField = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setCurrentClubInfo({

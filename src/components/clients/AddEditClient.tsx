@@ -171,7 +171,7 @@ export const AddEditClient: React.FC = () => {
 						
 						<label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
 								<input
-									id="is_actived"
+									id="is_active"
 									onChange={toggleEditCard}
 									type="checkbox"
 									value=""
