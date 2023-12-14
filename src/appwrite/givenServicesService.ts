@@ -29,6 +29,18 @@ class GivenServicesService extends genericSerivce implements ApiService<TypeGive
       throw new Error("User not connected")
     }
   }
+  async getSingle(documentId:string):Promise<TypeGivenServiceFull> {
+    if(await this.validateUser()){
+      const ans:TypeGivenServiceFull = await databases.getDocument(
+        conf.appwriteDatabaseId,
+				this.collectionId,
+				documentId,
+      );
+      return ans;
+    }else{
+      throw new Error("User not connected")
+    }
+  }
 
   async create(givenServices:TypeGivenService):Promise<TypeGivenServiceFull>{
     if(await this.validateUser()){

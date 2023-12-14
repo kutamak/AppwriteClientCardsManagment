@@ -2,8 +2,11 @@
 import React from 'react'
 import { useParams } from 'next/navigation'
 import Link from "next/link";
+import ShowSingleGivenService from '@/components/givenServices/ShowSingleGivenService';
+
 
 const ActiveServicePage = () => {
+    const myParams = useParams()
     console.log("useParams", useParams());
 
     return (
@@ -17,7 +20,7 @@ const ActiveServicePage = () => {
                 <span className="text-3xl font-bold">Active Services:   return <p>Post: </p></span>
             </h1>
             <div className="flex flex-col flex- gap-y-6 flex-wrap">
-                Will put something here later :)
+                <ShowSingleGivenService givenServiceId={myParams.id} />
             </div>
         </div>
     );
