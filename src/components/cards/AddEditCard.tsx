@@ -8,15 +8,13 @@ import { useContext, useState } from "react"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+type TypeAddEditCardProps = {
+  userId: string,
+  ignoreUser: boolean,
+}
 
-export const AddEditCard: React.FC = () => {
-  const [currentCard, setCurrentCard] = useState<TypeCard>({
-    times_used: 0,
-    user2cards: "",
-    card_type: "",
-    is_active: false,
-    expires_date: new Date(),
-  })
+export const AddEditCard = (props: TypeAddEditCardProps) => {
+  const { userId, ignoreUser } = props;
 
   const { listCards, setListCards, addEditCard,setAddEditCard } = useContext(CardsContext);
   const { listClients, isLoading:isLoadingClients } = useGetClients();
@@ -67,7 +65,7 @@ export const AddEditCard: React.FC = () => {
     <form className="p-4 md:p-5">
 
       <div className="col-span-2 sm:col-span-1">
-      {listClients && listClients.length > 0 && (
+      {!ignoreUser && listClients && listClients.length > 0 && (
           <>
           <label htmlFor="user2cards" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Select Your Client

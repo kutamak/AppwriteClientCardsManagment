@@ -11,19 +11,22 @@ import useGetCardTypes from "@/hooks/useGetCardTypes";
 import ClientsContext from "@/context/clients/ClientsContext";
 import myClientService from "@/appwrite/clientsService";
 import AddEditCard from "../cards/AddEditCard";
+import CardsContext from "@/context/cards/CardContext";
 
 interface EditableClient extends TypeClient {
 	$id?: string,
 }
 
-export const AddEditClient: React.FC = () => {
+export const AddEditClient = () => {
 	const [currentClient, setCurrentClient] = useState<EditableClient>({ full_name: "", email: "", phone_number: "", more_info: "", card_type:"" })
 	const [editCard, setEditCard] = useState<boolean>(false);
 	const { listClients, setListClients, addEditClient, setAddEditClient, } = useContext(ClientsContext);
+	const { setAddEditCard, addEditCard } = useContext(CardsContext);
 
 	const clientService = myClientService;
 
 	const toggleEditCard = (ev: ChangeEvent<HTMLInputElement>) => {
+		setAddEditCard({ times_used: 0, user2cards:"",expires_date: new Date() })
 		setEditCard(ev.currentTarget.checked)
 	}
 	const updateField = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -33,26 +36,13 @@ export const AddEditClient: React.FC = () => {
 		})
 		// editClub =  currentClient
 	}
-	// const updateSelectedArr = (ev: React.FormEvent<HTMLInputElement>)  =>{
-	// 	// ev.preventDefault();
-	// 	const currentCardTypeId = ev.currentTarget.value;
-	// 	const updatedCardTypes = [...currentClient.cardTypes];
-	// 	if(!ev.currentTarget.checked) {
-	// 		// Removing
-	// 		const isChecked = currentClient.cardTypes.findIndex(elm => currentCardTypeId === elm.$id)
-	// 		updatedCardTypes.splice(isChecked,1);
-	// 	}else{
-	// 		// Adding.
-	// 		const newClubType = listCards.find(elm => elm.$id === currentCardTypeId)
-	// 		if(newClubType){
-	// 			updatedCardTypes.push(newClubType)
-	// 		}
-	// 	}
 
-	// 	setCurrentClient({...currentClient, cardTypes: updatedCardTypes});
-	// }
 	const closeAddEdit = () => {
 		setAddEditClient(null);
+	}
+	const saveCard2Client = (client: TypeClientFull) => {
+		setAddEditCard({ ...addEditCard, user2cards: client })
+		
 	}
 
 	const confirmSaving = () => {
@@ -168,22 +158,25 @@ export const AddEditClient: React.FC = () => {
 								placeholder="More Info" />
 						</div>
 
-						
-						<label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
-								<input
-									id="is_active"
-									onChange={toggleEditCard}
-									type="checkbox"
-									value=""
-									className="sr-only peer"
-									checked={editCard}
-								/>
-								<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-								<span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Edit Members Card</span>
-							</label>
-
-						{ editCard && (
-							<AddEditCard />
+						{!currentClient?.$id && (
+							<>
+								<label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
+										<input
+											id="is_active"
+											onChange={toggleEditCard}
+											type="checkbox"
+											value=""
+											className="sr-only peer"
+											checked={editCard}
+										/>
+										<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+										<span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Edit Members Card</span>
+									</label>
+		
+								{ editCard && (
+									<AddEditCard ignoreUser={true} userId={addEditClient?.$id} />
+								)}
+							</>
 						)}
 					</form>
 				</MyModal>
