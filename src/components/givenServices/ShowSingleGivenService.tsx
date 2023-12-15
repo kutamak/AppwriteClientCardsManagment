@@ -6,7 +6,7 @@ import { TypeCardFull, TypeGivenServiceFull } from "@/globals/globalTypes";
 import { useEffect, useState } from "react";
 
 type ShowSingleGivenServiceProps = {
-  givenServiceId: string ;
+  givenServiceId: string | string[];
 };
 
 
