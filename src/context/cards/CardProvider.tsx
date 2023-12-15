@@ -10,7 +10,7 @@ export const CardsContextProvider = ({
   const [listCards, setListCards] = useState<TypeCardFull[]>([]);
   const [addEditCard, setAddEditCard] = useState<TypeCard | null>(null);
   return (
-    <CardsContextPreProvider value={{ listCards , setListCards, addEditCard, setAddEditCard }}>
+    <CardsContextPreProvider value={{ listCards , setListCards,  addEditCard, setAddEditCard }}>
       {children}
     </CardsContextPreProvider>
   );

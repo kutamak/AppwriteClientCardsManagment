@@ -98,10 +98,10 @@ const ListOfCards = (): React.ReactElement => {
 									# {i + 1}
 								</th>
 								<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-									{card.user2cards.full_name}
+									{typeof card.user2cards ==="object" ? card.user2cards.full_name: card.user2cards}
 								</th>
 								<td className="px-6 py-4">
-									{card.card_type.title}
+									{typeof card.card_type ==="object" ? card.card_type.title: card.card_type}
 								</td>
 								<td className="px-6 py-4">
 									{card.times_used.toString()}

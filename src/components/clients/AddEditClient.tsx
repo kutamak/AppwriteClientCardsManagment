@@ -26,7 +26,7 @@ export const AddEditClient = () => {
 	const clientService = myClientService;
 
 	const toggleEditCard = (ev: ChangeEvent<HTMLInputElement>) => {
-		setAddEditCard({ times_used: 0, user2cards:"",expires_date: new Date() })
+		setAddEditCard({ times_used: 0, user2cards:"",expires_date: new Date(), card_type:"", is_active: true })
 		setEditCard(ev.currentTarget.checked)
 	}
 	const updateField = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -41,7 +41,9 @@ export const AddEditClient = () => {
 		setAddEditClient(null);
 	}
 	const saveCard2Client = (client: TypeClientFull) => {
-		setAddEditCard({ ...addEditCard, user2cards: client })
+		if(addEditCard){
+			setAddEditCard({ ...addEditCard, user2cards: client })
+		}
 		
 	}
 
@@ -173,9 +175,9 @@ export const AddEditClient = () => {
 										<span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Edit Members Card</span>
 									</label>
 		
-								{ editCard && (
-									<AddEditCard ignoreUser={true} userId={addEditClient?.$id} />
-								)}
+								{/* {addEditClient && editCard && (
+									<AddEditCard ignoreUser={true} userId={addEditClient?.$id } />
+								)} */}
 							</>
 						)}
 					</form>

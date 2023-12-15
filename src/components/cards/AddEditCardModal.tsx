@@ -10,6 +10,8 @@ import { TypeCardFull } from "@/globals/globalTypes";
 export const AddEditCardModal = () => {
   const { addEditCard, setAddEditCard, listCards, setListCards } = useContext(CardsContext);
 
+  if(!addEditCard){return <div>Some Error on Edit Modal</div>}
+  
   const confirmSaving = () => {
     if("$id" in addEditCard){
       // update

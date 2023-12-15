@@ -104,10 +104,10 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
           <tr key={card.$id}>
             <td  className="px-6 py-4">{i+1}</td>
             <td  className="px-6 py-4">
-              {card.user2cards.full_name} 
+              {typeof card.user2cards ==="object" ? card.user2cards.full_name : card.user2cards} 
             </td>
             <td  className="px-6 py-4">
-              {card.times_used} Of {card.card_type.usageCountLimit}
+              {card.times_used} Of {typeof card.card_type ==="object" ? card.card_type.usageCountLimit : "unknown"}
             </td>
             <td  className="px-6 py-4">
               {convertDateToReadableString(card.expires_date)}
