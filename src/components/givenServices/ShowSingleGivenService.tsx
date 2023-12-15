@@ -71,7 +71,7 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
       For This, there are {givenService.cardTypes.length} cards:
       <ul>
         {givenService.cardTypes.map((cardType) => (
-          <li>{cardType.title}</li>
+          <li key={cardType.$id}>{cardType.title}</li>
         ))}
       </ul>
       <br />
