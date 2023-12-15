@@ -4,13 +4,14 @@ import MyModal from "../globals/MyModal"
 import AddEditCard from "./AddEditCard"
 import CardsContext from "@/context/cards/CardContext";
 import myCardService from "@/appwrite/cardsService";
+import { TypeCardFull } from "@/globals/globalTypes";
+
 
 export const AddEditCardModal = () => {
   const { addEditCard, setAddEditCard, listCards, setListCards } = useContext(CardsContext);
 
   const confirmSaving = () => {
-    console.log("confirmSaving", addEditCard)
-    if(addEditCard.$id){
+    if("$id" in addEditCard){
       // update
       myCardService.update(addEditCard.$id, addEditCard).then(res => {
         if(res.$id){

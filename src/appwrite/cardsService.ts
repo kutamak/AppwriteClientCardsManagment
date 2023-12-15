@@ -1,7 +1,7 @@
 import conf from "@/conf/config";
 import appwriteService, { account, databases } from "./config"
 import { ID, Models, Permission, Query, Role } from "appwrite";
-import { ApiResponse, ApiService, TypeCardFull, TypeClient, CreateUserAccount, TypeCard, extraQueryParams } from "@/globals/globalTypes";
+import { ApiResponse, ApiService, TypeCardFull, TypeClient, CreateUserAccount, TypeCard, extraQueryParams, TypeCardInput } from "@/globals/globalTypes";
 import { genericSerivce } from "./genericService";
 import { getQueriesFromParams } from "@/globals/functions";
 
@@ -70,7 +70,7 @@ class CardService extends genericSerivce implements ApiService<TypeCardFull> {
 	// }
 
 
-	async create(card:TypeCard) {
+	async create(card:TypeCardInput) {
 		if (await this.validateUser()) {
 
 			const myPermissions = this.getAllPermissionsForUserId(<string>this.currentUser?.$id);

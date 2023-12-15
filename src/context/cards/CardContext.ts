@@ -6,7 +6,7 @@ import { createContext } from "react";
 export const CardsContext = createContext<{
     listCards: TypeCardFull[],
     setListCards: (cards: TypeCardFull[]) => void,
-    addEditCard: TypeCard, 
+    addEditCard: TypeCard | TypeCardFull, 
     setAddEditCard: (club: TypeCard | null) => void,
 }>({
     listCards: [],

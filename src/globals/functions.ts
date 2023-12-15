@@ -9,7 +9,7 @@ export function getIdsFromDocument(cardTypes: Models.Document[]): string[] {
   return ids;
 }
 
-export const convertDateToReadableString = (dbDate: Date| null): string => {
+export const convertDateToReadableString = (dbDate: Date| string| null | undefined): string => {
   if(!dbDate) return "Forever :)"
   const date = new Date(dbDate);
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;

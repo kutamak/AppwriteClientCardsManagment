@@ -17,7 +17,7 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
 
   useEffect(() => {
     console.log("useEffect ShowSingleGivenService");
-    givenServicesService.getSingle(givenServiceId).then((res) => {
+    givenServicesService.getSingle(givenServiceId.toString()).then((res) => {
       setGivenService(res);
     });
   }, []);

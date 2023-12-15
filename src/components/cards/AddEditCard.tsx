@@ -1,7 +1,7 @@
 "use client"
 
 import CardsContext from "@/context/cards/CardContext"
-import { TypeCard, TypeClient } from "@/globals/globalTypes"
+import { TypeCard, TypeCardFull, TypeClient, TypeClientFull, TypeClubFull } from "@/globals/globalTypes"
 import useGetCardTypes from "@/hooks/useGetCardTypes"
 import useGetClients from "@/hooks/useGetClients"
 import { useContext, useState } from "react"
@@ -9,12 +9,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 type TypeAddEditCardProps = {
-  userId: string,
-  ignoreUser: boolean,
+  userId?: string | undefined,
+  ignoreUser?: boolean,
 }
 
-export const AddEditCard = (props: TypeAddEditCardProps) => {
-  const { userId, ignoreUser } = props;
+export const AddEditCard: React.FC<TypeAddEditCardProps> = ({ userId, ignoreUser } ) => {
+  // const { userId, ignoreUser } = props || {};
 
   const { listCards, setListCards, addEditCard,setAddEditCard } = useContext(CardsContext);
   const { listClients, isLoading:isLoadingClients } = useGetClients();
@@ -34,15 +34,19 @@ export const AddEditCard = (props: TypeAddEditCardProps) => {
     })
   }
 
-  const updateDateField = (date: Date) => {
+  const updateDateField = (date: Date | null) => {
     console.log("date ?????????", date);
-    setAddEditCard({
-      ...addEditCard,
-      expires_date: date,
-    })
+    if(date){
+      setAddEditCard({
+        ...addEditCard,
+        expires_date: date,
+      })
+    }else{
+      console.log("IT's null")
+    }
   }
 
-  const checkIfCardIsSelected = (singleCard: TypeCard) => {
+  const checkIfCardIsSelected = (singleCard: TypeClubFull) => {
     if (typeof addEditCard.card_type === "string") {
       return addEditCard.card_type === singleCard.$id
     } else {
@@ -50,7 +54,7 @@ export const AddEditCard = (props: TypeAddEditCardProps) => {
     }
   }
 
-  const checkIfClientIsSelected = (singleClient: TypeClient ) => {
+  const checkIfClientIsSelected = (singleClient: TypeClientFull ) => {
     if (typeof addEditCard.user2cards === "string") {
       return addEditCard.user2cards === singleClient.$id
     } else {
@@ -125,10 +129,14 @@ export const AddEditCard = (props: TypeAddEditCardProps) => {
             </label>
             <DatePicker
               onChange={(val) => {updateDateField(val)}}
-              selected={typeof(addEditCard.expires_date) === "object" ? addEditCard.expires_date : new Date(addEditCard.expires_date)}
+              selected={
+                typeof(addEditCard.expires_date) === "object" 
+                  ? addEditCard.expires_date 
+                  : new Date(addEditCard.expires_date || "")
+                }
               dateFormat="dd/MM/yyyy"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Cards times_used" 
+              placeholderText="Cards expires_date"
             />
           </div>
 
@@ -155,7 +163,7 @@ export const AddEditCard = (props: TypeAddEditCardProps) => {
               type="checkbox"
               value=""
               className="sr-only peer"
-              checked={addEditCard.is_active ?? false}
+              checked={!!addEditCard.is_active}
             />
             <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
             <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">is_active</span>

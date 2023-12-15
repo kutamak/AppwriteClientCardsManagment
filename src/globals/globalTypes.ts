@@ -3,7 +3,8 @@ import { Type } from "typescript";
 
 
 
-interface ApiResponse<T> extends Models.DocumentList <(TypeGivenServiceFull | TypeClubFull | TypeClientFull | TypeCardFull)>{
+// interface ApiResponse<T> extends Models.DocumentList <(TypeGivenServiceFull | TypeClubFull | TypeClientFull | TypeCardFull)>{
+interface ApiResponse<T> extends Models.DocumentList <any>{
 
 }
 interface ApiService <T>{
@@ -53,8 +54,18 @@ interface TypeClientFull extends TypeClient, Models.Document {}
 interface TypeCard {
     times_used: number;
     user2cards: string | TypeClientFull;
+    card_type: string | TypeClubFull;
+    // user2cards: TypeClientFull;
+    // card_type: TypeClubFull;
+    is_active: Boolean;
+    expires_date?: string | Date;
+
+}
+interface TypeCardInput {
+    times_used: number;
+    user2cards: string | TypeClientFull;
     card_type?: string | TypeClubFull;
-    is_active?: Boolean;
+    is_active: Boolean;
     expires_date?: string | Date;
 
 }
@@ -79,6 +90,7 @@ type extraQueryParams = {
 export type { 
     extraQueryParams,
     TypeCardFull,
+    TypeCardInput,
     TypeCard,
     TypeClub,
     TypeClubFull, 

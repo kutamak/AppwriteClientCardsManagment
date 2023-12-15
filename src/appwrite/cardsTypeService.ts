@@ -21,7 +21,7 @@ class CardTypesService extends genericSerivce implements ApiService<TypeClubFull
 
 	async getList<T>():Promise<ApiResponse<TypeClubFull>> {
 		if (await this.validateUser()) {
-			const ans:ApiResponse<T> = await databases.listDocuments(
+			const ans:ApiResponse<TypeClubFull> = await databases.listDocuments(
 				conf.appwriteDatabaseId,
 				this.collectionId,
 			);

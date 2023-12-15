@@ -1,6 +1,6 @@
 import cardsTypeService from "@/appwrite/cardsTypeService";
 import CardTypesContext from "@/context/cardTypes/CardTypeContext";
-import { TypeClubFull } from "@/globals/globalTypes";
+import { TypeCardFull } from "@/globals/globalTypes";
 import { useContext, useEffect, useState } from "react";
 
 const useGetCardTypes = () => {
@@ -11,7 +11,7 @@ const useGetCardTypes = () => {
   
 	const refreshList = async () => {
     setIsLoading(true);
-		const myLists = await cardsTypeService.getList<TypeClubFull>();
+		const myLists = await cardsTypeService.getList<TypeCardFull>();
 		try {
 			if (myLists) {
 				setListCards(myLists?.documents);
