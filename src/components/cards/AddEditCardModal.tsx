@@ -4,8 +4,6 @@ import MyModal from "../globals/MyModal"
 import AddEditCard from "./AddEditCard"
 import CardsContext from "@/context/cards/CardContext";
 import myCardService from "@/appwrite/cardsService";
-import { TypeCardFull } from "@/globals/globalTypes";
-
 
 export const AddEditCardModal = () => {
   const { addEditCard, setAddEditCard, listCards, setListCards } = useContext(CardsContext);

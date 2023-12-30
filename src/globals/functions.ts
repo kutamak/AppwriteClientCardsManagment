@@ -22,4 +22,12 @@ export const getQueriesFromParams = (params: extraQueryParams): string[]=> {
   }
   return queries;
 }
+
+export const isDbDateIsSameLikeToday = (dbDate: Date | string | null | undefined): boolean => {
+  console.log("Check this date: ", dbDate)
+  if(!dbDate) return false;
+  const date = new Date(dbDate);
+  const today = new Date();
+  return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+}
 // export  {getIdsFromDocument}

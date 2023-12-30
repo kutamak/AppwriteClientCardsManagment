@@ -4,13 +4,14 @@ import givenServicesService from "@/appwrite/givenServicesService";
 import { convertDateToReadableString } from "@/globals/functions";
 import { TypeCardFull, TypeGivenServiceFull } from "@/globals/globalTypes";
 import { useEffect, useState } from "react";
+import ShowSingleGivenServiceCardRow from "./ShowSingleGivingServiceCardRow";
 
 type ShowSingleGivenServiceProps = {
   givenServiceId: string | string[];
 };
 
 
-export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
+export const ShowSingleGivenService = (props: ShowSingleGivenServiceProps) => {
   const { givenServiceId } = props;
   const [givenService, setGivenService] = useState<TypeGivenServiceFull | null>(null);
   const [usedCards, setUsedCards] = useState<TypeCardFull[]>([]);
@@ -24,9 +25,9 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
 
   useEffect(() => {
     console.log("givenServiceId", givenServiceId);
-    if(givenService?.$id){
+    if (givenService?.$id) {
       // if there's something here
-      myCardService.getList({card_type: givenService?.cardTypes.map(ctype => ctype.$id), is_active:true}).then((res) => {
+      myCardService.getList({ card_type: givenService?.cardTypes.map(ctype => ctype.$id), is_active: true }).then((res) => {
         console.log("res", res);
         setUsedCards(res.documents);
       });
@@ -34,11 +35,18 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
 
   }, [givenService]);
 
+  const updateRow = (index: number, updatedCard: TypeCardFull) => {
+    console.log("updateRow", index, updatedCard);
+    const newUsedCards = [...usedCards];
+    newUsedCards.splice(index, 1, updatedCard);
+    setUsedCards(newUsedCards);
+  }
+
   const addEntryToCard = (cardId: string, old_times_used: number) => {
     // i'm currently lazy to get this records and get the current times_used
     // so i just get it from the table
     console.log("addEntryToCard", cardId, old_times_used);
-    myCardService.incrementTimesUsed(cardId, old_times_used +1).then((res) => {
+    myCardService.incrementTimesUsed(cardId, old_times_used + 1).then((res) => {
       console.log("res", res);
       // Now update the list of cards
       const newUsedCards = [...usedCards];
@@ -61,7 +69,7 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
   console.log(" usedCards", usedCards);
 
 
-  if(givenService === null) return (<div>Loading Your Service...</div>)
+  if (givenService === null) return (<div>Loading Your Service...</div>)
   // if(usedCards.length === 0 ) return (<div>Loading The Cards for this Service...</div>)
   return (
     <div>
@@ -77,49 +85,36 @@ export const ShowSingleGivenService = (props:ShowSingleGivenServiceProps) => {
       <br />
       <br />
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-					<tr>
-						<th scope="col" className="px-2 py-3">
-							#
-						</th>
-						<th scope="col" className="px-6 py-3">
-							User Name
-						</th>
-						<th scope="col" className="px-6 py-3">
-							Usage
-						</th>
-						<th scope="col" className="px-6 py-3">
-							expires
-						</th>
-						<th scope="col" className="px-6 py-3">
-							Actions
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-        {(usedCards.length === 0 ) ?
-          (<div>Loading The Cards for this Service...</div>)
-          :
-          usedCards?.map((card, i) => (
-          <tr key={card.$id}>
-            <td  className="px-6 py-4">{i+1}</td>
-            <td  className="px-6 py-4">
-              {typeof card.user2cards ==="object" ? card.user2cards.full_name : card.user2cards} 
-            </td>
-            <td  className="px-6 py-4">
-              {card.times_used} Of {typeof card.card_type ==="object" ? card.card_type.usageCountLimit : "unknown"}
-            </td>
-            <td  className="px-6 py-4">
-              {convertDateToReadableString(card.expires_date)}
-            </td>
-            <td  className="px-6 py-4">
-              <button onClick={() => addEntryToCard(card.$id, card.times_used)}>
-                ADD ENTRY NOW
-              </button>
-
-            </td>
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" className="px-2 py-3">
+              #
+            </th>
+            <th scope="col" className="px-6 py-3">
+              User Name
+            </th>
+            <th scope="col" className="px-6 py-3">
+              expires
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Usage
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Actions
+            </th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {(usedCards.length === 0)
+            ? (<div>Loading The Cards for this Service...</div>)
+            : usedCards?.map((card, i) => (
+              <ShowSingleGivenServiceCardRow
+                key={card.$id}
+                givenServiceCard={card}
+                index={i + 1}
+                onChange={(updatedCard) => { updateRow(i, updatedCard) }}
+              />
+            ))}
 
         </tbody>
       </table>
