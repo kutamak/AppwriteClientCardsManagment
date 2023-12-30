@@ -17,18 +17,18 @@ export const ShowSingleGivenService = (props: ShowSingleGivenServiceProps) => {
   const [usedCards, setUsedCards] = useState<TypeCardFull[]>([]);
 
   useEffect(() => {
-    console.log("useEffect ShowSingleGivenService");
+    // console.log("useEffect ShowSingleGivenService");
     givenServicesService.getSingle(givenServiceId.toString()).then((res) => {
       setGivenService(res);
     });
   }, []);
 
   useEffect(() => {
-    console.log("givenServiceId", givenServiceId);
+    // console.log("givenServiceId", givenServiceId);
     if (givenService?.$id) {
       // if there's something here
       myCardService.getList({ card_type: givenService?.cardTypes.map(ctype => ctype.$id), is_active: true }).then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setUsedCards(res.documents);
       });
     }
@@ -36,37 +36,37 @@ export const ShowSingleGivenService = (props: ShowSingleGivenServiceProps) => {
   }, [givenService]);
 
   const updateRow = (index: number, updatedCard: TypeCardFull) => {
-    console.log("updateRow", index, updatedCard);
+    // console.log("updateRow", index, updatedCard);
     const newUsedCards = [...usedCards];
     newUsedCards.splice(index, 1, updatedCard);
     setUsedCards(newUsedCards);
   }
 
-  const addEntryToCard = (cardId: string, old_times_used: number) => {
-    // i'm currently lazy to get this records and get the current times_used
-    // so i just get it from the table
-    console.log("addEntryToCard", cardId, old_times_used);
-    myCardService.incrementTimesUsed(cardId, old_times_used + 1).then((res) => {
-      console.log("res", res);
-      // Now update the list of cards
-      const newUsedCards = [...usedCards];
-      const findMatchIndex = newUsedCards.findIndex((card) => res.$id === cardId);
-      newUsedCards.splice(findMatchIndex, 1, res);
-      // newUsedCards.map((card) => {
-      //   if(res.$id === cardId){
-      //     console.log("update card WITH", res);
-      //     return res;
-      //   }
-      //   return card;
-      // });
-      console.log("newUsedCards", newUsedCards)
-      setUsedCards(newUsedCards);
-    });
-  }
+  // const addEntryToCard = (cardId: string, old_times_used: number) => {
+  //   // i'm currently lazy to get this records and get the current times_used
+  //   // so i just get it from the table
+  //   console.log("addEntryToCard", cardId, old_times_used);
+  //   myCardService.incrementTimesUsed(cardId, old_times_used + 1).then((res) => {
+  //     console.log("res", res);
+  //     // Now update the list of cards
+  //     const newUsedCards = [...usedCards];
+  //     const findMatchIndex = newUsedCards.findIndex((card) => res.$id === cardId);
+  //     newUsedCards.splice(findMatchIndex, 1, res);
+  //     // newUsedCards.map((card) => {
+  //     //   if(res.$id === cardId){
+  //     //     console.log("update card WITH", res);
+  //     //     return res;
+  //     //   }
+  //     //   return card;
+  //     // });
+  //     console.log("newUsedCards", newUsedCards)
+  //     setUsedCards(newUsedCards);
+  //   });
+  // }
 
 
-  console.log(" givenService ", givenService);
-  console.log(" usedCards", usedCards);
+  // console.log(" givenService ", givenService);
+  // console.log(" usedCards", usedCards);
 
 
   if (givenService === null) return (<div>Loading Your Service...</div>)

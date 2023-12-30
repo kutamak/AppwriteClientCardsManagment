@@ -49,9 +49,6 @@ const ListOfCards = (): React.ReactElement => {
 		return <div>Loading...</div>
 	}
 
-	console.log(".....listCards", listCards);
-
-
 	return (
 		<div>
 			List of Cards:
