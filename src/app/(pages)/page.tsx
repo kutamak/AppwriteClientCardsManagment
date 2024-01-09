@@ -14,7 +14,7 @@ return (
                 <div className="relative text-center w-full flex justify-center flex-wrap">
                     <div className="w-full">
                         <h1 className="font-bold text-3xl mb-4">
-                            Card Members By <span className="text-primary">Guy</span>
+                            Card Members For <span className="text-primary">Starters</span>
                         </h1>
                         <p className="text-black/60 text-white">
                             Manage your clients, and thier member cards easily.
