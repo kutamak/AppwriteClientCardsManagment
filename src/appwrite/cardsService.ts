@@ -41,6 +41,27 @@ class CardService extends genericSerivce implements ApiService<TypeCardFull> {
 			throw new Error("User not connected")
 		}
 	}
+	async getSingleByClientId(clientId: string):Promise<null | TypeCardFull> {
+		if (await this.validateUser()) {
+			const ans = await databases.listDocuments<TypeCardFull>(
+				conf.appwriteDatabaseId,
+				this.collectionId,
+				[
+					Query.equal("user2cards", clientId),
+					Query.equal("is_active", true),
+				]
+			);
+			console.log("getSingleByClientId ans", ans)
+			if(ans.documents.length > 0){
+				return ans.documents[0]
+			}else{
+				return null
+			}
+			// return ans
+		} else {
+			throw new Error("User not connected")
+		}
+	}
 
 	async incrementTimesUsed(cardId: string, newEntryCount: number):Promise<any> {
 	// TODO: get the entry, and increment it.

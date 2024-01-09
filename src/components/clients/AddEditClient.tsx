@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useContext, useEffect, useState } from "react"
 import MyModal from "../globals/MyModal"
-import cardsService from "@/appwrite/cardsTypeService";
+import cardsService from "@/appwrite/cardsService";
 import { TypeClubFull, TypeClient, TypeClientFull } from "@/globals/globalTypes";
 // import ClientsContext from "@/context/clientServices/ClientsContext";
 // import clientServicesService from "@/appwrite/clientServicesService";
@@ -18,15 +18,22 @@ interface EditableClient extends TypeClient {
 }
 
 export const AddEditClient = () => {
-	const [currentClient, setCurrentClient] = useState<EditableClient>({ full_name: "", email: "", phone_number: "", more_info: "", card_type:"" })
+	const [currentClient, setCurrentClient] = useState<EditableClient>({ full_name: "", email: "", phone_number: "", more_info: "", card_type:"" });
+	const [autoSaveCard, setAutoSaveCard] = useState<boolean>(false);
 	const [editCard, setEditCard] = useState<boolean>(false);
-	const { listClients, setListClients, addEditClient, setAddEditClient, } = useContext(ClientsContext);
+	const { listClients, setListClients, addEditClient, setAddEditClient } = useContext(ClientsContext);
 	const { setAddEditCard, addEditCard } = useContext(CardsContext);
 
 	const clientService = myClientService;
 
 	const toggleEditCard = (ev: ChangeEvent<HTMLInputElement>) => {
-		setAddEditCard({ times_used: 0, user2cards:"",expires_date: new Date(), card_type:"", is_active: true })
+		setAddEditCard({ 
+			times_used: 0, 
+			user2cards: currentClient?.$id || "",
+			expires_date: new Date(), 
+			card_type:"", 
+			is_active: true
+		})
 		setEditCard(ev.currentTarget.checked)
 	}
 	const updateField = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -39,6 +46,9 @@ export const AddEditClient = () => {
 
 	const closeAddEdit = () => {
 		setAddEditClient(null);
+		setAddEditCard(null);
+		setEditCard(false);
+		setAutoSaveCard(false);
 	}
 	const saveCard2Client = (client: TypeClientFull) => {
 		if(addEditCard){
@@ -58,27 +68,34 @@ export const AddEditClient = () => {
 					setListClients(newlistClients);
 					if(editCard){
 						//TODO: update card
+						saveCard2Client(res);
+						setAutoSaveCard(true);
+					}else{
+						closeAddEdit();
 					}
-					closeAddEdit();
 				} else {
 					throw new Error("Something went wrong")
 				}
 			})
 		} else {
 			// it's creating new
-			clientService.create(currentClient).then(res => {
-				if (res.$id) {
+			clientService.create(currentClient).then(newUser => {
+				if (newUser.$id) {
 					// all is successfull
 					setListClients([
 						...listClients,
-						res
+						newUser
 					])
 					if(editCard){
-						//TODO: update card
+						//TODO: create card
+						// setAddEditCard({ ...addEditCard, user2cards: newUser })
+						saveCard2Client(newUser);
+						setAutoSaveCard(true);
+					}else{
+						closeAddEdit();
 					}
-					closeAddEdit();
 				} else {
-					console.log("Something went wrong", res)
+					console.log("Something went wrong", newUser)
 					throw new Error("Something went wrong")
 				}
 			}).catch(e => {
@@ -89,9 +106,27 @@ export const AddEditClient = () => {
 	useEffect(() => {
 		if (addEditClient) {
 			setCurrentClient(addEditClient);
+			console.log("addEditClient", addEditClient)
+			if("$id" in addEditClient){
+				// it's a full client, let's get the card from the cardService
+				cardsService.getSingleByClientId(addEditClient.$id).then(res => {
+					// if res is null then we need to create a new card
+					if(res !== null){
+						setAddEditCard(res);
+					}
+				})
+			}
 		}
 	}, [addEditClient])
 
+	// on unmount of this component, we need to reset the addEditCard and addEditClient
+	useEffect(() => {
+		return () => {
+			setAddEditCard(null);
+			setAddEditClient(null);
+		}
+	}, [])
+	
 	return (
 		<>
 			{addEditClient && (
@@ -160,7 +195,7 @@ export const AddEditClient = () => {
 								placeholder="More Info" />
 						</div>
 
-						{!currentClient?.$id && (
+						{(true || !currentClient?.$id)  && (
 							<>
 								<label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
 										<input
@@ -175,9 +210,10 @@ export const AddEditClient = () => {
 										<span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Edit Members Card</span>
 									</label>
 		
-								{/* {addEditClient && editCard && (
-									<AddEditCard ignoreUser={true} userId={addEditClient?.$id } />
-								)} */}
+								{addEditClient && editCard && addEditCard && (
+									<AddEditCard ignoreUser={true} userId={("$id" in addEditCard) ? addEditCard?.$id : "" } />
+								)}
+								
 							</>
 						)}
 					</form>

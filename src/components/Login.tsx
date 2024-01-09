@@ -1,6 +1,7 @@
 "use client";
 import appwriteService from "@/appwrite/config";
 import useAuth from "@/context/useAuth";
+import { PagesUrls } from "@/globals/globalVars";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, {FormEvent, useState} from "react";
@@ -19,8 +20,8 @@ const Login = () => {
         try {
             const session = await appwriteService.login(formData);
             if (session) {
-                setAuthStatus(true)
-                router.push("/profile")
+                setAuthStatus(true);
+                router.push(PagesUrls.GIVEN_SERVICES);
             }
                 
             

@@ -68,7 +68,6 @@ export const AddEditCard: React.FC<TypeAddEditCardProps> = ({ userId, ignoreUser
 
   return (
     <form className="p-4 md:p-5">
-
       <div className="col-span-2 sm:col-span-1">
         {!ignoreUser && listClients && listClients.length > 0 && (
           <>
