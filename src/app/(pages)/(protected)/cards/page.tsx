@@ -19,7 +19,7 @@ const CardTypesPage = () => {
                 </Link>
                 <span className="text-3xl font-bold">Cards</span>
             </h1>
-            <div className="flex flex-col flex- gap-y-6 flex-wrap">
+            <div className="flex flex-col flex- gap-y-6 flex-wrap w-full">
                 <CreateNewCardButton />
                 <AddEditCardModal />
                 <ListOfCards />

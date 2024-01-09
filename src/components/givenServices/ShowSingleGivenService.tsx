@@ -42,31 +42,6 @@ export const ShowSingleGivenService = (props: ShowSingleGivenServiceProps) => {
     setUsedCards(newUsedCards);
   }
 
-  // const addEntryToCard = (cardId: string, old_times_used: number) => {
-  //   // i'm currently lazy to get this records and get the current times_used
-  //   // so i just get it from the table
-  //   console.log("addEntryToCard", cardId, old_times_used);
-  //   myCardService.incrementTimesUsed(cardId, old_times_used + 1).then((res) => {
-  //     console.log("res", res);
-  //     // Now update the list of cards
-  //     const newUsedCards = [...usedCards];
-  //     const findMatchIndex = newUsedCards.findIndex((card) => res.$id === cardId);
-  //     newUsedCards.splice(findMatchIndex, 1, res);
-  //     // newUsedCards.map((card) => {
-  //     //   if(res.$id === cardId){
-  //     //     console.log("update card WITH", res);
-  //     //     return res;
-  //     //   }
-  //     //   return card;
-  //     // });
-  //     console.log("newUsedCards", newUsedCards)
-  //     setUsedCards(newUsedCards);
-  //   });
-  // }
-
-
-  // console.log(" givenService ", givenService);
-  // console.log(" usedCards", usedCards);
 
 
   if (givenService === null) return (<div>Loading Your Service...</div>)
@@ -84,7 +59,7 @@ export const ShowSingleGivenService = (props: ShowSingleGivenServiceProps) => {
       </ul>
       <br />
       <br />
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      {/* <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-2 py-3">
@@ -103,21 +78,27 @@ export const ShowSingleGivenService = (props: ShowSingleGivenServiceProps) => {
               Actions
             </th>
           </tr>
-        </thead>
+        </thead> 
         <tbody>
+        */}
+        <ul className="w-full divide-y divide-gray-200 dark:divide-gray-700">
+
           {(usedCards.length === 0)
             ? (<div>Loading The Cards for this Service...</div>)
             : usedCards?.map((card, i) => (
-              <ShowSingleGivenServiceCardRow
-                key={card.$id}
-                givenServiceCard={card}
-                index={i + 1}
-                onChange={(updatedCard) => { updateRow(i, updatedCard) }}
-              />
+              <li className="pb-3 pt-3 sm:pb-4" key={card.$id}>
+                <ShowSingleGivenServiceCardRow
+                  key={card.$id}
+                  givenServiceCard={card}
+                  index={i + 1}
+                  onChange={(updatedCard) => { updateRow(i, updatedCard) }}
+                />
+              </li>
             ))}
-
+          </ul>
+{/* 
         </tbody>
-      </table>
+      </table> */}
 
     </div>
   )

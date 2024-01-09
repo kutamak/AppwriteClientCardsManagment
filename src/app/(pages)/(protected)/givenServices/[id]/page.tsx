@@ -7,7 +7,6 @@ import ShowSingleGivenService from '@/components/givenServices/ShowSingleGivenSe
 
 const ActiveServicePage = () => {
     const myParams = useParams()
-    console.log("useParams", useParams());
 
     return (
         <div className="w-full max-w-xl mx-auto py-8 flex flex-wrap gap-y-6">
@@ -17,9 +16,9 @@ const ActiveServicePage = () => {
                         &lt;
                     </span>
                 </Link>
-                <span className="text-3xl font-bold">Active Services:   return <p>Post: </p></span>
+                <span className="text-3xl font-bold">Active Services</span>
             </h1>
-            <div className="flex flex-col flex- gap-y-6 flex-wrap">
+            <div className="flex flex-col flex- gap-y-6 flex-wrap w-full">
                 <ShowSingleGivenService givenServiceId={myParams.id} />
             </div>
         </div>

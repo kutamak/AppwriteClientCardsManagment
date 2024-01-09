@@ -16,7 +16,7 @@ const GivenServicesPage = () => {
                 </Link>
                 <span className="text-3xl font-bold">Given Services</span>
             </h1>
-            <div className="flex flex-col flex- gap-y-6 flex-wrap">
+            <div className="flex flex-col flex- gap-y-6 flex-wrap w-full">
                 <CreateNewGivenServiceButton />
                 <AddEditGivenService />
                 <ListOfGivenServices />
